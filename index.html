@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookify</title>
+    <script>
+        window.onload = () => {
+            var xhr = new XMLHttpRequest();
+
+            function Book(data) {
+                this.title = data.title;
+                this.author = data.author;
+                this.year = data.year;
+                this.link = data.link;
+                this.pages = data.pages;
+                this.country = data.country;
+                this.language = data.language;
+            }
+
+
+
+            xhr.open('GET', 'https://raw.githubusercontent.com/benoitvallon/100-best-books/master/books.json', true);
+
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var data = JSON.parse(xhr.responseText);
+                    var books = data.map(function(bookData) {
+                        return new Book(bookData);
+                    });
+                    console.log(books);
+
+                } else {
+                    console.error('Error: ' + xhr.statusText);
+                }
+            };
+
+            xhr.onerror = function() {
+                console.error('Error: ' + xhr.statusText);
+            };
+
+            xhr.send();
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container" id="book-list">
+
+    </div>
+</body>
+
+</html>
